@@ -108,11 +108,26 @@
     <Compile Include="NHibernateMaps\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
+    <Compile Include="NHibernateMaps\MCustomerMap.cs" />
+    <Compile Include="NHibernateMaps\TReferenceMap.cs" />
+    <Compile Include="NHibernateMaps\TWOHaveReadMap.cs" />
+    <Compile Include="NHibernateMaps\TWOLogMap.cs" />
+    <Compile Include="NHibernateMaps\TWOMap.cs" />
+    <Compile Include="NHibernateMaps\TWOStatusMap.cs" />
+    <Compile Include="Repository\MCustomerRepository.cs" />
+    <Compile Include="Repository\TReferenceRepository.cs" />
+    <Compile Include="Repository\TWOLogRepository.cs" />
+    <Compile Include="Repository\TWORepository.cs" />
+    <Compile Include="Repository\TWOStatusRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YTech.PruClient.Domain\YTech.PruClient.Domain.csproj">
       <Project>{8DEF56CD-601E-443C-9DCE-C4EC54C0B6A6}</Project>
       <Name>YTech.PruClient.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YTech.PruClient.Enums\YTech.PruClient.Enums.csproj">
+      <Project>{eea1d5fd-32de-4953-a790-2db1a1711023}</Project>
+      <Name>YTech.PruClient.Enums</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

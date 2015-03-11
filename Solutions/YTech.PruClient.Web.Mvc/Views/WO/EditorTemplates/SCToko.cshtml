@@ -1,0 +1,9 @@
+﻿@model string
+           
+@(
+ Html.Kendo().DropDownListFor(m => m) 
+        .OptionLabel("-Pilih Jenis Dokumen-")
+        .DataValueField("Value")
+        .DataTextField("Text")        
+        .BindTo((System.Collections.IEnumerable)ViewData["sc_toko"])
+)

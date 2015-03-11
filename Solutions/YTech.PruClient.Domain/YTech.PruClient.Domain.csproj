@@ -66,6 +66,9 @@
     <Reference Include="SharpArch.Domain">
       <HintPath>..\..\ReferencedAssemblies\SharpArchitecture\SharpArch.Domain.dll</HintPath>
     </Reference>
+    <Reference Include="SharpArch.NHibernate">
+      <HintPath>..\..\ReferencedAssemblies\SharpArchitecture\SharpArch.NHibernate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core">
@@ -81,7 +84,23 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Contracts\IMCustomerRepository.cs" />
+    <Compile Include="Contracts\ITReferenceRepository.cs" />
+    <Compile Include="Contracts\ITWOLogRepository.cs" />
+    <Compile Include="Contracts\ITWORepository.cs" />
+    <Compile Include="Contracts\ITWOStatusRepository.cs" />
+    <Compile Include="Contracts\Tasks\IMCustomerTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITReferenceTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOLogTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOStatusTasks.cs" />
+    <Compile Include="Contracts\Tasks\ITWOTasks.cs" />
+    <Compile Include="MCustomer.cs" />
     <Compile Include="MyEntity1.cs" />
+    <Compile Include="TReference.cs" />
+    <Compile Include="TWO.cs" />
+    <Compile Include="TWOHaveRead.cs" />
+    <Compile Include="TWOLog.cs" />
+    <Compile Include="TWOStatus.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -102,7 +121,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Contracts\Queries\" />
-    <Folder Include="Contracts\Tasks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\YTech.PruClient.Enums\YTech.PruClient.Enums.csproj">
+      <Project>{eea1d5fd-32de-4953-a790-2db1a1711023}</Project>
+      <Name>YTech.PruClient.Enums</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
