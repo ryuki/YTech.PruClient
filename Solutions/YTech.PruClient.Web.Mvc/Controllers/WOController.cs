@@ -539,7 +539,7 @@ namespace YTech.PruClient.Web.Mvc.Controllers
                    {
                        WOID = wo.Id,
                        Customer = ConvertToCustomerVM(wo.CustomerId, wo.CustomerName),
-                       CustomerName = wo.Id + " - " + wo.CustomerName,
+                       CustomerName = wo.CustomerId + " - " + wo.CustomerName,
                        CustomerPhone = wo.CustomerPhone,
                        CustomerAddress = wo.CustomerAddress,
                        HiddenCustomerId = wo.CustomerId,

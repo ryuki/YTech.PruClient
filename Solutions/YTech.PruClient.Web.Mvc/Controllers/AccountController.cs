@@ -252,7 +252,7 @@ namespace YTech.PruClient.Web.Mvc.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                string defaultPassword = "jayamesin";
+                string defaultPassword = "adminadmin";
                 MembershipCreateStatus createStatus;
                 Membership.CreateUser(model.UserName, defaultPassword, model.Email, null, null, true, null, out createStatus);
 
