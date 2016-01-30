@@ -84,16 +84,19 @@
     <Compile Include="..\..\Common\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Contracts\ITBingoRepository.cs" />
     <Compile Include="Contracts\IMCustomerRepository.cs" />
     <Compile Include="Contracts\ITReferenceRepository.cs" />
     <Compile Include="Contracts\ITWOLogRepository.cs" />
     <Compile Include="Contracts\ITWORepository.cs" />
     <Compile Include="Contracts\ITWOStatusRepository.cs" />
+    <Compile Include="Contracts\Tasks\ITBingoTasks.cs" />
     <Compile Include="Contracts\Tasks\IMCustomerTasks.cs" />
     <Compile Include="Contracts\Tasks\ITReferenceTasks.cs" />
     <Compile Include="Contracts\Tasks\ITWOLogTasks.cs" />
     <Compile Include="Contracts\Tasks\ITWOStatusTasks.cs" />
     <Compile Include="Contracts\Tasks\ITWOTasks.cs" />
+    <Compile Include="TBingo.cs" />
     <Compile Include="MCustomer.cs" />
     <Compile Include="MyEntity1.cs" />
     <Compile Include="TReference.cs" />

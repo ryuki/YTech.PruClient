@@ -108,12 +108,14 @@
     <Compile Include="NHibernateMaps\Conventions\PrimaryKeyConvention.cs" />
     <Compile Include="NHibernateMaps\Conventions\TableNameConvention.cs" />
     <Compile Include="NHibernateMaps\AutoPersistenceModelGenerator.cs" />
+    <Compile Include="NHibernateMaps\TBingoMap.cs" />
     <Compile Include="NHibernateMaps\MCustomerMap.cs" />
     <Compile Include="NHibernateMaps\TReferenceMap.cs" />
     <Compile Include="NHibernateMaps\TWOHaveReadMap.cs" />
     <Compile Include="NHibernateMaps\TWOLogMap.cs" />
     <Compile Include="NHibernateMaps\TWOMap.cs" />
     <Compile Include="NHibernateMaps\TWOStatusMap.cs" />
+    <Compile Include="Repository\TBingoRepository.cs" />
     <Compile Include="Repository\MCustomerRepository.cs" />
     <Compile Include="Repository\TReferenceRepository.cs" />
     <Compile Include="Repository\TWOLogRepository.cs" />
