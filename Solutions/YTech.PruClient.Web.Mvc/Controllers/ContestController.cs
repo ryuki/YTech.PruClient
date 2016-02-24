@@ -49,6 +49,13 @@ namespace YTech.PruClient.Web.Mvc.Controllers
                 {
                     vm.ImageFile = BingoViewModel.NoBingoImage;
                 }
+                //vm.Winner1 = "AUN";
+                //vm.Winner2 = "DARWIN";
+                //vm.Winner3 = "RINA";
+                //vm.Winner4 = "EDI YANTO";
+                //vm.Winner5 = "JOHN";
+
+                vm.TheWinner = bingo.BingoWinner;
             }
             else
             {
@@ -59,82 +66,115 @@ namespace YTech.PruClient.Web.Mvc.Controllers
 
         [AllowAnonymous]
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Bingo(BingoViewModel model)
+        public ActionResult Bingo(BingoViewModel model, string submitButton)
         {
             if (ModelState.IsValid)
             {
-                if (model.BingoDate == DateTime.Today)
+                if (submitButton == "Bingo")
                 {
-                    if (DateTime.Now.Hour < 10)
-                    {
-                        return RedirectToAction("Bingo", "Contest", new { bingoDate = model.BingoDate });
-                    }
+                    return FillBingo(model);
                 }
-                else if (model.BingoDate > DateTime.Today)
+                else if (submitButton == "SubmitWinner")
+                {
+                    return FillWinner(model);
+                }
+            }
+
+            return View();
+        }
+
+        private ActionResult FillWinner(BingoViewModel model)
+        {
+            //save the winner
+            TBingo bingo = bingoTasks.GetByDate(model.BingoDate);
+            if (bingo != null)
+            {
+                bingo.BingoWinner = model.TheWinner;
+
+                bingo.ModifiedDate = DateTime.Now;
+                bingo.ModifiedBy = User.Identity.Name;
+                bingo.DataStatus = "Updated";
+
+                bingoTasks.Update(bingo);
+            }
+
+            return RedirectToAction("Bingo", "Contest", new { bingoDate = model.BingoDate });
+        }
+
+        private ActionResult FillBingo(BingoViewModel model)
+        {
+            if (model.BingoDate == DateTime.Today)
+            {
+                if (DateTime.Now.Hour < 10)
                 {
                     return RedirectToAction("Bingo", "Contest", new { bingoDate = model.BingoDate });
                 }
-                TBingo bingo = bingoTasks.GetByDate(model.BingoDate);
-                if (bingo != null)
-                {
-                    bingo.ModifiedDate = DateTime.Now;
-                    bingo.ModifiedBy = User.Identity.Name;
-                    bingo.DataStatus = "Updated";
+            }
+            else if (model.BingoDate > DateTime.Today)
+            {
+                return RedirectToAction("Bingo", "Contest", new { bingoDate = model.BingoDate });
+            }
+            TBingo bingo = bingoTasks.GetByDate(model.BingoDate);
+            if (bingo != null)
+            {
+                bingo.ModifiedDate = DateTime.Now;
+                bingo.ModifiedBy = User.Identity.Name;
+                bingo.DataStatus = "Updated";
 
-                    bingoTasks.Update(bingo);
-                }
-                else
-                {
-                    //var bingo = bingoTasks.GetBingoByWeek(model.BingoDate.week);
+                bingoTasks.Update(bingo);
+            }
+            else
+            {
+                //var bingo = bingoTasks.GetBingoByWeek(model.BingoDate.week);
 
-                    // Gets the Calendar instance associated with a CultureInfo.
-                    CultureInfo myCI = CultureInfo.CurrentCulture;
-                    System.Globalization.Calendar myCal = myCI.Calendar;
-                    // Gets the DTFI properties required by GetWeekOfYear.
-                    CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
-                    DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
-                    int week = myCal.GetWeekOfYear(model.BingoDate, myCWR, myFirstDOW);
-                    TBingo bingoWinThisWeek = bingoTasks.GetBingoByWeekStatus(week, model.BingoDate.Year, "YES");
-                    int dayOfWeek = (int)model.BingoDate.DayOfWeek;
-                    double param = 100;
-                    string stat = "";
-                    //no winner yet
-                    if (bingoWinThisWeek == null)
+                // Gets the Calendar instance associated with a CultureInfo.
+                CultureInfo myCI = CultureInfo.CurrentCulture;
+                System.Globalization.Calendar myCal = myCI.Calendar;
+                // Gets the DTFI properties required by GetWeekOfYear.
+                CalendarWeekRule myCWR = myCI.DateTimeFormat.CalendarWeekRule;
+                DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
+                int week = myCal.GetWeekOfYear(model.BingoDate, myCWR, myFirstDOW);
+                TBingo bingoWinThisWeek = bingoTasks.GetBingoByWeekStatus(week, model.BingoDate.Year, "YES");
+                int dayOfWeek = (int)model.BingoDate.DayOfWeek;
+                double param = 100;
+                string stat = "";
+                //no winner yet
+                if (bingoWinThisWeek == null)
+                {
+                    param = (100d / 7d) * (dayOfWeek + 1d);
+                    Random rand = new Random();
+                    if (rand.NextDouble() * 100 <= param)
                     {
-                        param = (100d / 7d) * (dayOfWeek + 1d);
-                        Random rand = new Random();
-                        if (rand.NextDouble() * 100 <= param)
-                        {
-                            stat = "YES";
-                        }
-                        else
-                        {
-                            stat = "NO";
-                        }
+                        stat = "YES";
                     }
-                    //we have a winner, set no winner anymore
                     else
                     {
                         stat = "NO";
                     }
-
-                    bingo = new TBingo();
-                    bingo.SetAssignedIdTo(Guid.NewGuid().ToString());
-                    bingo.BingoDate = model.BingoDate;
-                    bingo.BingoStatus = stat;
-                    bingo.BingoWeek = week;
-                    bingo.BingoMonth = model.BingoDate.Month;
-                    bingo.BingoYear = model.BingoDate.Year;
-
-                    bingo.CreatedDate = DateTime.Now;
-                    bingo.CreatedBy = User.Identity.Name;
-                    bingo.DataStatus = "New";
-                    bingoTasks.Insert(bingo);
                 }
+                //we have a winner, set no winner anymore
+                else
+                {
+                    stat = "NO";
+                }
+
+                bingo = new TBingo();
+                bingo.SetAssignedIdTo(Guid.NewGuid().ToString());
+                bingo.BingoDate = model.BingoDate;
+                bingo.BingoStatus = stat;
+                bingo.BingoWeek = week;
+                bingo.BingoMonth = model.BingoDate.Month;
+                bingo.BingoYear = model.BingoDate.Year;
+                bingo.BingoWinner = string.Empty;
+
+                bingo.CreatedDate = DateTime.Now;
+                bingo.CreatedBy = User.Identity.Name;
+                bingo.DataStatus = "New";
+                bingoTasks.Insert(bingo);
             }
+
             // If we got this far, something failed, redisplay form
             return RedirectToAction("Bingo", "Contest", new { bingoDate = model.BingoDate });
-
         }
     }
 }

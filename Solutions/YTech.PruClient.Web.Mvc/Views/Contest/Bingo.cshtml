@@ -9,42 +9,147 @@
     <script src="@Url.Content("~/Content/js/modernizr-1.7.min.js")" type="text/javascript"></script>*@
 
     <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Scripts/bootstrap.min.css")" rel="stylesheet" type="text/css" media="screen" />
+    <link href="@Url.Content("~/Scripts/style.css")" rel="stylesheet" type="text/css" media="screen" />
+    <link href="@Url.Content("~/Scripts/jquery.slotmachine.css")" rel="stylesheet" type="text/css" media="screen" />
+
     <link href="@Url.Content("~/Content/kendo/2013.1.514/kendo.common.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/kendo/2013.1.514/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/kendo/2013.1.514/kendo.blueopal.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/kendo/2013.1.514/kendo.dataviz.blueopal.min.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/kendo/2013.1.514/jquery.min.js")"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery-2.1.1.min.js")"></script>
+    @*<script src="@Url.Content("~/Scripts/kendo/2013.1.514/jquery.min.js")"></script>*@
     <script src="@Url.Content("~/Scripts/kendo/2013.1.514/kendo.all.min.js")"></script>
     <script src="@Url.Content("~/Scripts/kendo/2013.1.514/kendo.aspnetmvc.min.js")"></script>
     <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+
+    <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.slotmachine.js")"></script>
+
 </head>
 
-<body>
+<body style="vertical-align: middle; text-align: center; font-size: 16px;">
 
     @using (Html.BeginForm())
     {
         @Html.HiddenFor(m => m.BingoId)
-        <div style="vertical-align: middle; text-align: center; font-size: 16px;">
+        @Html.HiddenFor(m => m.TheWinner)
+        <div>
             <div>
                 @(Html.Kendo().DatePickerFor(m => m.BingoDate))
-                @(Html.Button("Bingo","BINGO !!!!", HtmlButtonType.Submit))
+                @(Html.Button("submitButton", "BINGO !!!!", HtmlButtonType.Submit, "", new { @style = "height:33px;", @value = "Bingo" }))
             </div>
             @* @Html.TextBoxFor(m => m.BingoStatus)*@
             <div>
                 <img src="@Url.Content(Model.ImageFile)" alt="Bingo" />
             </div>
-            <div>
-                Jam sekarang : @DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss")
+        </div>
+        
+        if (Model.BingoStatus == "YES")
+        {
+        <div style="vertical-align: middle; text-align: center; font-size: 16px;">
+            Daftar Yang Closing dan Posting :<br />
+            @Html.TextBoxFor(m => m.Winner1)<br />
+            @Html.TextBoxFor(m => m.Winner2)<br />
+            @Html.TextBoxFor(m => m.Winner3)<br />
+            @Html.TextBoxFor(m => m.Winner4)<br />
+            @Html.TextBoxFor(m => m.Winner5)<br />
+        </div>
+
+            if (Model.TheWinner == "")
+            {
+        <div style="vertical-align: middle; text-align: center; font-size: 16px;">
+            @(Html.Button("CheckWin", "Cari Pemenang Kontes !!!", HtmlButtonType.Button, "", new { @style = "height:33px;", @class = "CheckWin" }))
+            @(Html.Button("submitButton", "Submit", HtmlButtonType.Submit, "", new { @style = "height:33px;", @value = "SubmitWinner", @class = "SubmitWinner" }))
+        </div>
+        <div id="footer">
+            <div class="content">
+                <div id="textMachine2" style="text-align: center">
+                    @*<div>@(Model.Winner1)</div>
+                    <div>@(Model.Winner2)</div>
+                    <div>@(Model.Winner3)</div>
+                    <div>@(Model.Winner4)</div>
+                    <div>@(Model.Winner5)</div>*@
+                </div>
             </div>
-            @*@Html.TextBoxFor(m => m.DayOfWeek)*@
+        </div>
+            }
+
+            if (Model.TheWinner != "")
+            {
+        <div>
+            Pemenang kontes adalah 
+                <br />
+            <h3 class="thewinner">
+            @(Html.Label(Model.TheWinner))
+        </div>
+            }
+        }
+        <div>
+            Jam sekarang : @DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss")
         </div>
     }
-
     <script type="text/javascript">
         jQuery(document).ready(function () {
-            Layout.init();
+            $(".SubmitWinner").hide();
 
+            var mc2 = $("#textMachine2").slotMachine({
+                active: 1,
+                delay: 450
+            });
+            $("#textMachine2").hide();
+            $(".CheckWin").click(function () {
+                FillWinner();
+                $("#textMachine2").show();
+                mc2.shuffle(5, onComplete2);
+            })
+            function onComplete2(active) {
+                $(".CheckWin").attr('disabled', 'disabled');
+                //alert(active);
+                var thewinner = $("#Winner1").val();
+                switch (active) {
+                    case 0:
+                        thewinner = $("#Winner1").val();
+                        break;
+                    case 1:
+                        thewinner = $("#Winner2").val();
+                        break;
+                    case 2:
+                        thewinner = $("#Winner3").val();
+                        break;
+                    case 3:
+                        thewinner = $("#Winner4").val();
+                        break;
+                    case 4:
+                        thewinner = $("#Winner5").val();
+                        break;
+                }
+                $("#TheWinner").val(thewinner);
+                //alert($("#TheWinner").val());
+
+                //get delay effect
+                setTimeout(function () {
+                    $(".SubmitWinner").click();
+                }, 1000);
+
+            }
         })
+
+        function FillWinner() {
+            var Winner1 = $("#Winner1").val();
+            var Winner2 = $("#Winner2").val();
+            var Winner3 = $("#Winner3").val();
+            var Winner4 = $("#Winner4").val();
+            var Winner5 = $("#Winner5").val();
+            var textMachine = $("#textMachine");
+            textMachine.text("");
+            textMachine.append('<div>' + Winner1 + '</div>');
+            textMachine.append('<div>' + Winner2 + '</div>');
+            textMachine.append('<div>' + Winner3 + '</div>');
+            textMachine.append('<div>' + Winner4 + '</div>');
+            textMachine.append('<div>' + Winner5 + '</div>');
+        }
     </script>
 </body>
 </html>

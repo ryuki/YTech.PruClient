@@ -217,6 +217,9 @@
     <Content Include="Content\img\track.jpg" />
     <Content Include="Content\img\window16.gif" />
     <Content Include="Content\js\jquery-1.6.1.min.js" />
+    <Content Include="Scripts\bootstrap.min.css" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
     <Content Include="Content\js\modernizr-1.7.min.js" />
     <Content Include="Content\kendo\2013.1.514\Black\editor.png" />
     <Content Include="Content\kendo\2013.1.514\Black\imagebrowser.png" />
@@ -373,6 +376,8 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Scripts\jquery-1.9.1-vsdoc.js" />
+    <Content Include="Scripts\jquery.slotmachine.min.css" />
+    <Content Include="Scripts\jquery.slotmachine.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\kendo.modernizr.custom.js" />
     <Content Include="Scripts\kendo\2013.1.514\cultures\kendo.culture.af-ZA.min.js" />
@@ -818,6 +823,7 @@
     <Content Include="Scripts\kendo\2013.1.514\kendo.window.min.js" />
     <Content Include="Scripts\Layout.js" />
     <Content Include="Scripts\Navigation.js" />
+    <Content Include="Scripts\style.css" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Contest\Bingo.cshtml">
       <SubType>Code</SubType>
@@ -863,6 +869,12 @@
     <Content Include="Views\Shared\_Navigation.cshtml" />
     <Content Include="Views\Shared\_NoMenuLayout.cshtml" />
     <Content Include="Views\Shared\_title.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YTech.PruClient.Domain\YTech.PruClient.Domain.csproj">
@@ -920,7 +932,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>51949</DevelopmentServerPort>
+          <DevelopmentServerPort>53777</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

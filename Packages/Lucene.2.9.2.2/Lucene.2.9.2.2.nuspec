@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Lucene</id>
+    <version>2.9.2.2</version>
+    <title>Lucene</title>
+    <authors>Apache Software Foundation</authors>
+    <owners>Apache Software Foundation</owners>
+    <licenseUrl>https://svn.apache.org/repos/asf/lucene/lucene.net/tags/Lucene.Net_2_9_2/LICENSE.txt</licenseUrl>
+    <projectUrl>http://lucene.apache.org/lucene.net/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Lucene.Net is a source code, class-per-class, API-per-API and algorithmatic port of the Java Lucene search engine to the .NET platform</description>
+    <summary>Lucene.Net is a source code, class-per-class, API-per-API and algorithmatic port of the Java Lucene search engine to the .NET platform</summary>
+  </metadata>
+</package>

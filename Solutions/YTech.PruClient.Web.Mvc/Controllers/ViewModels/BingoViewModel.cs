@@ -56,5 +56,23 @@ namespace YTech.PruClient.Web.Mvc.Controllers.ViewModels
             get;
             set;
         }
+
+        [DisplayName("Pemenang 1")]
+        public string Winner1 { get; set; }
+
+        [DisplayName("Pemenang 2")]
+        public string Winner2 { get; set; }
+
+        [DisplayName("Pemenang 3")]
+        public string Winner3 { get; set; }
+
+        [DisplayName("Pemenang 4")]
+        public string Winner4 { get; set; }
+
+        [DisplayName("Pemenang 5")]
+        public string Winner5 { get; set; }
+
+        [DisplayName("Pemenang")]
+        public string TheWinner { get; set; }
     }
 }
