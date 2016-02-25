@@ -828,9 +828,9 @@
     <Content Include="Views\Contest\Bingo.cshtml">
       <SubType>Code</SubType>
     </Content>
-    <None Include="Web.config">
+    <Content Include="Web.config">
       <SubType>Designer</SubType>
-    </None>
+    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
@@ -893,11 +893,6 @@
       <Project>{C9AAC14B-E695-4508-83B7-ACB8FC5A7284}</Project>
       <Name>YTech.PruClient.Tasks</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="NHibernate.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Queries\" />

@@ -105,7 +105,7 @@ namespace YTech.PruClient.Web.Mvc.Controllers
         {
             if (model.BingoDate == DateTime.Today)
             {
-                if (DateTime.Now.Hour < 10)
+                if (DateTime.Now.AddHours(7).Hour < 17)
                 {
                     return RedirectToAction("Bingo", "Contest", new { bingoDate = model.BingoDate });
                 }
@@ -136,26 +136,25 @@ namespace YTech.PruClient.Web.Mvc.Controllers
                 int week = myCal.GetWeekOfYear(model.BingoDate, myCWR, myFirstDOW);
                 TBingo bingoWinThisWeek = bingoTasks.GetBingoByWeekStatus(week, model.BingoDate.Year, "YES");
                 int dayOfWeek = (int)model.BingoDate.DayOfWeek;
-                double param = 100;
+
                 string stat = "";
                 //no winner yet
                 if (bingoWinThisWeek == null)
                 {
-                    param = (100d / 7d) * (dayOfWeek + 1d);
-                    Random rand = new Random();
-                    if (rand.NextDouble() * 100 <= param)
+                    RandomizeWin(dayOfWeek, ref stat);
+                }
+                //we have a winner, set no winner anymore
+                else
+                {
+                    //jika blm ada pemenang, maka cari yg menang
+                    if (string.IsNullOrEmpty(bingoWinThisWeek.BingoWinner))
                     {
-                        stat = "YES";
+                        RandomizeWin(dayOfWeek, ref stat);
                     }
                     else
                     {
                         stat = "NO";
                     }
-                }
-                //we have a winner, set no winner anymore
-                else
-                {
-                    stat = "NO";
                 }
 
                 bingo = new TBingo();
@@ -175,6 +174,21 @@ namespace YTech.PruClient.Web.Mvc.Controllers
 
             // If we got this far, something failed, redisplay form
             return RedirectToAction("Bingo", "Contest", new { bingoDate = model.BingoDate });
+        }
+
+        private static void RandomizeWin(int dayOfWeek, ref string stat)
+        {
+            double param = 100;
+            param = (100d / 7d) * (dayOfWeek + 1d);
+            Random rand = new Random();
+            if (rand.NextDouble() * 100 <= param)
+            {
+                stat = "YES";
+            }
+            else
+            {
+                stat = "NO";
+            }
         }
     }
 }

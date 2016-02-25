@@ -11,7 +11,7 @@
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Scripts/bootstrap.min.css")" rel="stylesheet" type="text/css" media="screen" />
     <link href="@Url.Content("~/Scripts/style.css")" rel="stylesheet" type="text/css" media="screen" />
-    <link href="@Url.Content("~/Scripts/jquery.slotmachine.css")" rel="stylesheet" type="text/css" media="screen" />
+    <link href="@Url.Content("~/Scripts/jquery.slotmachine.min.css")" rel="stylesheet" type="text/css" media="screen" />
 
     <link href="@Url.Content("~/Content/kendo/2013.1.514/kendo.common.min.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/kendo/2013.1.514/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
@@ -25,7 +25,7 @@
     <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
 
     <script src="@Url.Content("~/Scripts/bootstrap.min.js")"></script>
-    <script src="@Url.Content("~/Scripts/jquery.slotmachine.js")"></script>
+    <script src="@Url.Content("~/Scripts/jquery.slotmachine.min.js")"></script>
 
 </head>
 
@@ -48,6 +48,8 @@
         
         if (Model.BingoStatus == "YES")
         {
+            if (Model.TheWinner == "")
+            {
         <div style="vertical-align: middle; text-align: center; font-size: 16px;">
             Daftar Yang Closing dan Posting :<br />
             @Html.TextBoxFor(m => m.Winner1)<br />
@@ -55,24 +57,18 @@
             @Html.TextBoxFor(m => m.Winner3)<br />
             @Html.TextBoxFor(m => m.Winner4)<br />
             @Html.TextBoxFor(m => m.Winner5)<br />
-        </div>
-
-            if (Model.TheWinner == "")
-            {
-        <div style="vertical-align: middle; text-align: center; font-size: 16px;">
-            @(Html.Button("CheckWin", "Cari Pemenang Kontes !!!", HtmlButtonType.Button, "", new { @style = "height:33px;", @class = "CheckWin" }))
-            @(Html.Button("submitButton", "Submit", HtmlButtonType.Submit, "", new { @style = "height:33px;", @value = "SubmitWinner", @class = "SubmitWinner" }))
+            @(Html.Button("SubmitCandidate", "Submit !!!", HtmlButtonType.Button, "", new { @style = "height:33px;", @class = "SubmitCandidate" }))
         </div>
         <div id="footer">
             <div class="content">
                 <div id="textMachine2" style="text-align: center">
-                    @*<div>@(Model.Winner1)</div>
-                    <div>@(Model.Winner2)</div>
-                    <div>@(Model.Winner3)</div>
-                    <div>@(Model.Winner4)</div>
-                    <div>@(Model.Winner5)</div>*@
+                    <div>&nbsp;</div>
                 </div>
             </div>
+        </div>
+        <div style="vertical-align: middle; text-align: center; font-size: 16px;">
+            @(Html.Button("CheckWin", "Cari Pemenang Kontes !!!", HtmlButtonType.Button, "", new { @style = "height:33px;", @class = "CheckWin" }))
+            @(Html.Button("submitButton", "Submit", HtmlButtonType.Submit, "", new { @style = "height:33px;", @value = "SubmitWinner", @class = "SubmitWinner" }))
         </div>
             }
 
@@ -87,21 +83,25 @@
             }
         }
         <div>
-            Jam sekarang : @DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss")
+            Jam sekarang : @DateTime.Now.AddHours(7).ToString("dd-MMM-yyyy HH:mm:ss")
         </div>
     }
     <script type="text/javascript">
         jQuery(document).ready(function () {
             $(".SubmitWinner").hide();
+            $(".CheckWin").hide();
 
-            var mc2 = $("#textMachine2").slotMachine({
-                active: 1,
-                delay: 450
-            });
             $("#textMachine2").hide();
-            $(".CheckWin").click(function () {
+            $(".SubmitCandidate").click(function () {
                 FillWinner();
                 $("#textMachine2").show();
+                $(".CheckWin").show();
+            })
+            $(".CheckWin").click(function () {
+                var mc2 = $("#textMachine2").slotMachine({
+                    active: 1,
+                    delay: 650
+                });
                 mc2.shuffle(5, onComplete2);
             })
             function onComplete2(active) {
@@ -131,7 +131,7 @@
                 //get delay effect
                 setTimeout(function () {
                     $(".SubmitWinner").click();
-                }, 1000);
+                }, 2000);
 
             }
         })
@@ -142,13 +142,24 @@
             var Winner3 = $("#Winner3").val();
             var Winner4 = $("#Winner4").val();
             var Winner5 = $("#Winner5").val();
-            var textMachine = $("#textMachine");
+            var textMachine = $("#textMachine2");
             textMachine.text("");
-            textMachine.append('<div>' + Winner1 + '</div>');
-            textMachine.append('<div>' + Winner2 + '</div>');
-            textMachine.append('<div>' + Winner3 + '</div>');
-            textMachine.append('<div>' + Winner4 + '</div>');
-            textMachine.append('<div>' + Winner5 + '</div>');
+            if (Winner1 != "") {
+                textMachine.append('<div>' + Winner1 + '</div>');
+            }
+            if (Winner2 != "") {
+                textMachine.append('<div>' + Winner2 + '</div>');
+            }
+            if (Winner3 != "") {
+                textMachine.append('<div>' + Winner3 + '</div>');
+            }
+            if (Winner4 != "") {
+                textMachine.append('<div>' + Winner4 + '</div>');
+            }
+            if (Winner5 != "") {
+                textMachine.append('<div>' + Winner5 + '</div>');
+            }
+            //alert(textMachine.text());
         }
     </script>
 </body>
