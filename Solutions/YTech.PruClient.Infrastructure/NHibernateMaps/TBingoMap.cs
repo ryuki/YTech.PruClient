@@ -15,7 +15,7 @@ namespace YTech.PruClient.Infrastructure.NHibernateMaps
             mapping.DynamicInsert();
             mapping.SelectBeforeUpdate();
 
-            mapping.Table("dbo.T_BINGO");
+            mapping.Table("T_BINGO");
             mapping.Id(x => x.Id, "BINGO_ID")
                  .GeneratedBy.Assigned();
 

@@ -6,7 +6,8 @@
     {
         public ActionResult Index()
         {
-            return RedirectToAction("Bingo", "Contest");
+            //return RedirectToAction("Bingo", "Contest");
+            return View();
         }
 
     }
