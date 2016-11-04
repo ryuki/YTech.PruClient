@@ -18,7 +18,7 @@ namespace YTech.PruClient.Infrastructure.NHibernateMaps
             mapping.DynamicInsert();
             mapping.SelectBeforeUpdate();
 
-            mapping.Table("dbo.T_REFERENCE");
+            mapping.Table("T_REFERENCE");
             mapping.Id(x => x.Id, "REFERENCE_ID")
                  .GeneratedBy.Assigned();
 
